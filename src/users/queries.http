@@ -1,14 +1,18 @@
-### create user with email & password
+### signup
 POST http://localhost:3000/auth/signup/
 Content-Type: application/json
 
 {
-  "email": "test@bla.bla",
+  "email": "test6@bla.bla",
   "password": "password"
 }
 
 ### get user by id
 GET http://localhost:3000/auth/1
+Accept: application/json
+
+### 404
+GET http://localhost:3000/blah
 Accept: application/json
 
 ### get all users
