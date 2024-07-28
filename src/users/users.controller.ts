@@ -32,6 +32,7 @@ export class UsersController {
     return user;
   }
 
+  @Serialize(UserDto)
   @Get()
   findAllUsers(@Query('email') email: string) {
     return this.userService.find(email);
