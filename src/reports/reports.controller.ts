@@ -24,6 +24,7 @@ export class ReportsController {
   constructor(private reportsService: ReportsService) {}
 
   @Get()
+  @UseGuards(AuthGuard)
   getEstimate(@Query() query: GetEstimateDto) {
     return this.reportsService.createEstimate(query);
   }
