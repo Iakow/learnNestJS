@@ -23,6 +23,9 @@ export class User {
   @Column({ default: false })
   admin: boolean;
 
+  @Column({ default: 'new' })
+  newField: string;
+
   @OneToMany(() => Report, (report) => report.user)
   reports: Report[];
 
