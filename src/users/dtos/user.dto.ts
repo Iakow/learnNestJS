@@ -9,7 +9,4 @@ export class UserDto {
 
   @Expose()
   admin: boolean;
-
-  @Expose()
-  newField: string;
 }
