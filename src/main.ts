@@ -1,8 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-// eslint-disable-next-line
-const cookieSession = require('cookie-session');
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 
@@ -22,7 +20,6 @@ async function bootstrap() {
     customSiteTitle: 'CarValue API',
   });
 
-  app.use(cookieSession({ keys: ['alakjshdflkj'] }));
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   await app.listen(configService.get('PORT'));
 }
