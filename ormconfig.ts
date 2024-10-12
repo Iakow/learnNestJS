@@ -32,7 +32,7 @@ switch (process.env.NODE_ENV) {
     Object.assign(dbConfig, {
       type: 'sqlite',
       database: process.env.DB_NAME,
-      entities: ['**/*.entity.ts'],
+      entities: ['**/*.entity.js'],
     });
     break;
   default:
