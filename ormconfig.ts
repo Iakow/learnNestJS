@@ -29,6 +29,11 @@ switch (process.env.NODE_ENV) {
     });
     break;
   case 'production':
+    Object.assign(dbConfig, {
+      type: 'sqlite',
+      database: process.env.DB_NAME,
+      entities: ['**/*.entity.ts'],
+    });
     break;
   default:
     throw new Error('unknown environment');
