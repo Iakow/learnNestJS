@@ -51,7 +51,11 @@ export class UsersController {
 
   @Get('/whoami')
   @UseGuards(AuthGuard)
-  whoAmI(@CurrentUser() user: User) {
+  whoAmI(@CurrentUser() user: User, @Session() session: any) {
+    if (!user) {
+      session.userId = null;
+      throw new NotFoundException('user not found');
+    }
     return user;
   }
 
