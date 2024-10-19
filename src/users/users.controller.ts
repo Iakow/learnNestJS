@@ -20,6 +20,7 @@ import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from './user.entity';
 import { AuthGuard } from '../guards/auth.guard';
+import { AdminGuard } from '../guards/admin.guard';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -29,22 +30,16 @@ export class UsersController {
     private authService: AuthService,
   ) {}
 
-  @UseGuards(AuthGuard)
-  @Get('/whoami')
-  whoAmI(@CurrentUser() user: User) {
+  @Post('/signup')
+  async signUp(@Body() body: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.signup(body.email, body.password);
+    session.userId = user.id;
     return user;
   }
 
   @Post('/signout')
   signOut(@Session() session: any) {
     session.userId = null;
-  }
-
-  @Post('/signup')
-  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
-    const user = await this.authService.signup(body.email, body.password);
-    session.userId = user.id;
-    return user;
   }
 
   @Post('/signin')
@@ -54,28 +49,34 @@ export class UsersController {
     return user;
   }
 
+  @Get('/whoami')
   @UseGuards(AuthGuard)
+  whoAmI(@CurrentUser() user: User) {
+    return user;
+  }
+
   @Get('/:id')
-  async findUser(@Param('id') id: string) {
+  @UseGuards(AdminGuard)
+  async getUser(@Param('id') id: string) {
     const user = await this.userService.findOne(parseInt(id));
     if (!user) throw new NotFoundException('user not found');
     return user;
   }
 
-  @UseGuards(AuthGuard)
-  @Get()
-  findAllUsers(@Query('email') email: string) {
+  @Get('/')
+  @UseGuards(AdminGuard)
+  getUsers(@Query('email') email: string) {
     return this.userService.find(email);
   }
 
-  @UseGuards(AuthGuard)
   @Delete('/:id')
+  @UseGuards(AdminGuard)
   removeUser(@Param('id') id: string) {
     return this.userService.remove(parseInt(id));
   }
 
-  @UseGuards(AuthGuard)
   @Patch('/:id')
+  @UseGuards(AdminGuard) //TODO: maybe allow users to update their own info
   updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
     return this.userService.update(parseInt(id), body);
   }
