@@ -49,7 +49,7 @@ export class UsersController {
     return user;
   }
 
-  @Get('/whoami')
+  @Get('/users/whoami')
   @UseGuards(AuthGuard)
   whoAmI(@CurrentUser() user: User, @Session() session: any) {
     if (!user) {
@@ -59,7 +59,7 @@ export class UsersController {
     return user;
   }
 
-  @Get('/:id')
+  @Get('/users/:id')
   @UseGuards(AdminGuard)
   async getUser(@Param('id') id: string) {
     const user = await this.userService.findOne(parseInt(id));
@@ -67,20 +67,20 @@ export class UsersController {
     return user;
   }
 
-  @Get('/')
+  @Get('/users')
   @UseGuards(AdminGuard)
   getUsers(@Query('email') email: string) {
     return this.userService.find(email);
   }
 
-  @Delete('/:id')
+  @Delete('/users/:id')
   @UseGuards(AdminGuard)
   removeUser(@Param('id') id: string) {
     return this.userService.remove(parseInt(id));
   }
 
-  @Patch('/:id')
-  @UseGuards(AdminGuard) //TODO: maybe allow users to update their own info
+  @Patch('/users/:id')
+  @UseGuards(AdminGuard)
   updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
     return this.userService.update(parseInt(id), body);
   }
