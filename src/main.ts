@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
+import { appDescription } from './constants/app-description';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,9 +12,8 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('CarValue example')
-    .setDescription('The CarValue API description')
+    .setDescription(appDescription)
     .setVersion('1.0')
-    // .addTag('cars')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document, {

@@ -15,8 +15,10 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return app description', () => {
+      expect(appController.getHello()).toBe(
+        'This application allows you to get an estimate of the value of your car based on the reports with similar car params.',
+      );
     });
   });
 });

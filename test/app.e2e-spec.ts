@@ -19,6 +19,8 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/')
       .expect(200)
-      .expect('Hello World!');
+      .expect(
+        'This application allows you to get an estimate of the value of your car based on the reports with similar car params.',
+      );
   });
 });
