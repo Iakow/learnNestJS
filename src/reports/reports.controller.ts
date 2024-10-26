@@ -8,6 +8,7 @@ import {
   Get,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateReportDto } from './dtos/create-report.dto';
 import { ReportsService } from './reports.service';
 import { AuthGuard } from '../guards/auth.guard';
@@ -18,7 +19,6 @@ import { ReportDto } from './dtos/report.dto';
 import { ApproveReportDto } from './dtos/approve-report.dto';
 import { AdminGuard } from '../guards/admin.guard';
 import { GetEstimateDto } from './dtos/get-estimate.dto';
-import { ApiTags } from '@nestjs/swagger';
 
 @Controller('reports')
 export class ReportsController {
@@ -27,7 +27,7 @@ export class ReportsController {
   @Get()
   @ApiTags('reports')
   @UseGuards(AuthGuard)
-  getEstimates() {
+  getReports() {
     return this.reportsService.getReports();
   }
 

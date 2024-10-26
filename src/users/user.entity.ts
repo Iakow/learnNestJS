@@ -6,8 +6,12 @@ import {
   AfterUpdate,
   AfterRemove,
   OneToMany,
+  BeforeInsert,
 } from 'typeorm';
 import { Report } from '../reports/report.entity';
+import { ConfigService } from '@nestjs/config';
+
+const configService = new ConfigService();
 
 @Entity()
 export class User {
@@ -26,18 +30,25 @@ export class User {
   @OneToMany(() => Report, (report) => report.user)
   reports: Report[];
 
+  @BeforeInsert()
+  beforeInsertAction() {
+    if (this.email === configService.get('INITIAL_ADMIN_EMAIL')) {
+      this.admin = true;
+    }
+  }
+
   @AfterInsert()
   logInsert() {
-    console.log('Inserted User with id ', this.id);
+    // console.log('Inserted User with id ', this.id);
   }
 
   @AfterUpdate()
   logUpdate() {
-    console.log('Updated User with id ', this.id);
+    // console.log('Updated User with id ', this.id);
   }
 
   @AfterRemove()
   logRemove() {
-    console.log('Removed User with id ', this.id);
+    // console.log('Removed User with id ', this.id);
   }
 }
