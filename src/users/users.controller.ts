@@ -21,7 +21,7 @@ import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from './user.entity';
 import { AuthGuard } from '../guards/auth.guard';
 import { AdminGuard } from '../guards/admin.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -76,6 +76,7 @@ export class UsersController {
   @Get('/users')
   @ApiTags('users')
   @UseGuards(AdminGuard)
+  @ApiQuery({ name: 'email', required: false })
   getUsers(@Query('email') email: string) {
     return this.userService.find(email);
   }
